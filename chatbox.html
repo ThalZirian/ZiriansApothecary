@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<style>
+  body {
+    background-color: #1b1a17;
+    font-family: 'Garamond', serif;
+    color: #f0e6d2;
+    margin: 0;
+    padding: 0;
+  }
+
+  .chat-container {
+    max-width: 640px;
+	height: 350px; 
+	margin: 20px auto;
+    background: #2e2b25;
+    border: 5px double #c0a36e;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(255, 200, 120, 0.4);
+    padding: 30px;
+  }
+
+  #chatbox {
+    height: 240px;
+    overflow-y: scroll;
+    background-color: #1f1e1b;
+    border: 2px dashed #9c835c;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  input[type="text"], input[type="submit"] {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Garamond', serif;
+  }
+
+  input[type="text"] {
+    flex-grow: 1;
+    background-color: #f0e6d2;
+    color: #1b1a17;
+    border: 2px solid #c0a36e;
+  }
+
+  input[type="submit"] {
+    background-color: #c0a36e;
+    color: #1b1a17;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #e4c38c;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 36px;
+    color: #d8b375;
+    text-shadow: 2px 2px #000;
+    margin-bottom: 20px;
+  }
+</style>
+
+<meta charset="utf-8"/>
+<title>Apothecary Chat Scroll</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&amp;family=Cinzel+Decorative&amp;display=swap" rel="stylesheet"/>
+
+</head>
+<body><div class="chat-container"><h1>🌿 Whisper to the Flame Apothecary 🌿</h1><div class="chat-scroll">
+<div id="chatbox"></div>
+<input id="username" placeholder="Your Name" type="text"/>
+<input id="message" placeholder="Speak your flame..." type="text"/>
+<button onclick="sendMessage()">Send</button>
+</div><script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script><script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAz34DnZwFFRydKMUwcdHzUnCHV4vnffU",
+      authDomain: "soulflamechat.firebaseapp.com",
+      databaseURL: "https://soulflamechat-default-rtdb.firebaseio.com",
+      projectId: "soulflamechat",
+      storageBucket: "soulflamechat.appspot.com",
+      messagingSenderId: "189808685897",
+      appId: "1:189808685897:web:905694bd28276c7302e2a2",
+      measurementId: "G-S9DGS7HJ28"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+<button onclick="clearChat()" class="clear-btn">Clear Chat</button>
+    const chatbox = document.getElementById("chatbox");
+
+    function sendMessage() {
+      const username = document.getElementById("username").value;
+      const message = document.getElementById("message").value;
+      if (username && message) {
+        const time = new Date().toLocaleTimeString();
+        db.ref("messages").push({
+          name: username,
+          message: message,
+          time: time
+        });
+        document.getElementById("message").value = "";
+      }
+    }
+
+    db.ref("messages").on("child_added", function(snapshot) {
+      const msg = snapshot.val();
+      const msgElement = document.createElement("div");
+      msgElement.className = "message";
+      msgElement.innerHTML = `<strong>${msg.name}</strong>: ${msg.message}<div class='timestamp'>${msg.time}</div>`;
+      chatbox.appendChild(msgElement);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    });
+  </script>
+  <script>
+  function clearChat() {
+    document.getElementById("chatbox").innerHTML = "";
+  }
+</script>
+  </div></body>
+</html>
