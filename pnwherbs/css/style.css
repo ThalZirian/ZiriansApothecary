@@ -1,0 +1,78 @@
+/* Herb Container Styles */
+.herb-collection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(30, 20, 10, 0.2);
+  border-radius: 12px;
+  border: 2px solid #4f3d1a;
+  box-shadow: 0 0 12px rgba(255, 180, 80, 0.2);
+}
+
+.herb-entry {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 16px;
+  border-left: 4px solid #ff914d;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+.herb-entry h3 {
+  margin: 0 0 8px;
+  font-family: 'Cinzel', serif;
+  color: #ffdda1;
+}
+
+.herb-entry p {
+  margin: 4px 0;
+  font-family: 'Cormorant Garamond', serif;
+  color: #e5d8c3;
+  font-size: 15px;
+}
+.apothecary-button {
+  position: relative;
+  display: block;
+  padding: 20px;
+  text-align: center;
+  background: rgba(45, 30, 15, 0.85);
+  border: 2px solid #ffdda1;
+  color: #ffdda1;
+  font-family: 'Cinzel', serif;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.apothecary-button:hover {
+  background: rgba(80, 40, 10, 0.95);
+  color: #fff6d6;
+  box-shadow: 0 0 20px #ffdda1;
+}
+
+.apothecary-button .label-text {
+  position: relative;
+  z-index: 2;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.glow-ring {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle, rgba(255,221,161,0.15) 0%, transparent 70%);
+  z-index: 1;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+.apothecary-button:hover .glow-ring {
+  opacity: 1;
+}
